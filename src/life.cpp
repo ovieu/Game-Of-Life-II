@@ -16,10 +16,17 @@
 #include "lifegui.h"
 using namespace std;
 
+void displayWelcomeMsg() {
+    cout << "Welcome to the game of Life, a simulation of the lifecycle of a bacteria colony." << endl;
+    cout << "Cells live and die by the following rules:" << endl << endl;
+    cout << "\t - A cell with 1 or fewer neighbors dies of loneliness" << endl;
+    cout << "\t - Locations with 2 neighbors remain stable" << endl;
+    cout << "\t - Locations with 3 neighbors will spontaneously create life" << endl;
+    cout << "\t - Locations with 4 or more neighbors die of overcrowding" << endl << endl;
+    cout << " " << endl;
+}
+
 int main() {
-    // TODO: Finish the program!
-
-
-    cout << "Have a nice Life!" << endl;
+    displayWelcomeMsg();
     return 0;
 }
