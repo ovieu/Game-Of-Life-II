@@ -37,5 +37,15 @@ int main() {
         cout << "File does not exist" << endl;
     }
 
+    //  open the file
+    ifstream inputStream;
+    inputStream.open(file);
+
+    //  read file to console
+    string line;
+    while(getline(inputStream, line)) {
+        cout << line << endl;
+    }
+
     return 0;
 }
