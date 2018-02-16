@@ -28,5 +28,14 @@ void displayWelcomeMsg() {
 
 int main() {
     displayWelcomeMsg();
+    
+    //  get the file from the user
+    string file;
+    while (true) {
+        file = getLine("Grid input file name? ");
+        if (fileExists(file)) break;
+        cout << "File does not exist" << endl;
+    }
+
     return 0;
 }
