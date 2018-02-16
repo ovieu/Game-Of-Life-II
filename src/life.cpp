@@ -26,16 +26,22 @@ void displayWelcomeMsg() {
     cout << " " << endl;
 }
 
+static string getFileName() {
+    string filename;
+    while(true) {
+        filename = getLine("Grid input file name? ");
+        if (fileExists(filename)) {
+            return filename;
+        }
+        cout << "File does not exist" << endl;
+    }
+}
+
 int main() {
     displayWelcomeMsg();
     
     //  get the file from the user
-    string file;
-    while (true) {
-        file = getLine("Grid input file name? ");
-        if (fileExists(file)) break;
-        cout << "File does not exist" << endl;
-    }
+    string file = getFileName();
 
     //  open the file
     ifstream inputStream;
