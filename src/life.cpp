@@ -37,6 +37,37 @@ static string getFileName() {
     }
 }
 
+/** Obtain the row and column of the grid row from the file
+ * @brief getRowAndColSize
+ * @param numGridRow the number of rows in the bacteria grid
+ * @param numGridCol the number of columns in the bacteria grid
+ */
+static void getRowAndColSize(string fileName, int& numGridRow, int& numGridCol) {
+    //  open file
+    ifstream inputStream;
+    inputStream.open(fileName);
+
+    //  read first line and set to row
+    int lineCounter = 0;
+    string line;
+    while(getline(inputStream, line)) {
+        if (lineCounter < 1) {
+            numGridRow = stringToInteger(line);
+            lineCounter++;
+        }
+
+        if (lineCounter >= 1) {
+            numGridCol = stringToInteger(line);
+            lineCounter++;
+        }
+
+        if (lineCounter > 2) break;
+    }
+
+    inputStream.close();
+}
+
+
 int main() {
     displayWelcomeMsg();
     
@@ -47,11 +78,15 @@ int main() {
     ifstream inputStream;
     inputStream.open(file);
 
-    //  read file to console
-    string line;
-    while(getline(inputStream, line)) {
-        cout << line << endl;
-    }
+    //  get the row and column number from the file
+    int numGridRow;
+    int numGridCol;
+
+    getRowAndColSize(file, numGridRow, numGridCol);
+
+    cout << "the num of grid row is: " << numGridRow << endl;
+    cout << "the num of grid col is: " << numGridCol << endl;
+
 
     return 0;
 }
