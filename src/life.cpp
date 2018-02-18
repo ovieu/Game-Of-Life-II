@@ -16,6 +16,7 @@
 #include "lifegui.h"
 using namespace std;
 
+
 void displayWelcomeMsg() {
     cout << "Welcome to the game of Life, a simulation of the lifecycle of a bacteria colony." << endl;
     cout << "Cells live and die by the following rules:" << endl << endl;
@@ -67,16 +68,67 @@ static void getRowAndColSize(string fileName, int& numGridRow, int& numGridCol) 
     inputStream.close();
 }
 
+static void updateBacteriaColony(string line,
+                                 Grid<char>& bacteriaGrid,
+                                 int currentGridRow,
+                                 int numGridCol) {
+    for(int i = 0; i < numGridCol; i++) {
+        bacteriaGrid.set(currentGridRow,i, line.at(i));
+    }
+}
+
+
+/**
+ *
+ * @brief createBacteriaColony  creates a pattern from the input grid file,
+ * updates the original bacteria colony
+ * @param bacteriaGrid the grid to be updated with the pattern from file
+ * @param fileName the source file for bacteria colonization
+ */
+static void createColonyFromFilePattern(Grid<char>& bacteriaGrid,
+                                 string fileName,
+                                 int numGridRows,
+                                 int numGridCol) {
+    //open the file
+    ifstream inputStream;
+    inputStream.open(fileName);
+
+    int inputFileLineNumber = 0;
+
+    string line;
+    //  start reading from the third line
+    //  update the grid number
+    int currentGridRow = 0;
+
+    while(getline(inputStream, line)) {
+        if (inputFileLineNumber >=2) {
+            if (inputFileLineNumber < (numGridRows + 2)) {
+                string bacteriaRowPattern = line;
+                //
+                //  simp cout << line << endl;
+                //
+                updateBacteriaColony(bacteriaRowPattern, bacteriaGrid,
+                                     currentGridRow, numGridCol);
+                currentGridRow++;
+            }
+        }
+        inputFileLineNumber++;
+    }
+    inputStream.close();
+
+    //  check the grid to see the output here
+    bacteriaGrid.toString();
+}
 
 int main() {
     displayWelcomeMsg();
-    
+
     //  get the file from the user
     string file = getFileName();
 
-    //  open the file
-    ifstream inputStream;
-    inputStream.open(file);
+//    //  open the file
+//    ifstream inputStream;
+//    inputStream.open(file);
 
     //  get the row and column number from the file
     int numGridRow;
@@ -87,6 +139,15 @@ int main() {
     cout << "the num of grid row is: " << numGridRow << endl;
     cout << "the num of grid col is: " << numGridCol << endl;
 
+    //  create the bacteria grid
+    Grid<char> bacteriaGrid(numGridRow, numGridCol);
+
+    //  insert grid pattern from file into grid
+    createColonyFromFilePattern(bacteriaGrid, file, numGridRow, numGridCol);
+
+    //  test to see if the grid worked
+    //  test here
+    cout << bacteriaGrid.toString() << endl;
 
     return 0;
 }
