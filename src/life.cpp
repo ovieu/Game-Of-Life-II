@@ -120,6 +120,15 @@ static void createColonyFromFilePattern(Grid<char>& bacteriaGrid,
     bacteriaGrid.toString();
 }
 
+static void gridDisplay(const Grid<char>& bacteriaGrid) {
+    for(int i = 0; i < bacteriaGrid.nRows; i++) {
+        for(int j = 0; j < bacteriaGrid.nCols; j++) {
+            cout << bacteriaGrid.get(i, j);
+        }
+        cout << endl;
+    }
+}
+
 int main() {
     displayWelcomeMsg();
 
@@ -145,9 +154,8 @@ int main() {
     //  insert grid pattern from file into grid
     createColonyFromFilePattern(bacteriaGrid, file, numGridRow, numGridCol);
 
-    //  test to see if the grid worked
-    //  test here
-    cout << bacteriaGrid.toString() << endl;
+    //  test using grid display
+    gridDisplay(bacteriaGrid);
 
     return 0;
 }
